@@ -2,7 +2,7 @@
 const Election = require("../models/Election");
 const Candidate = require("../models/Candidate");
 
-// Create Election (Admin)
+
 exports.createElection = async (req, res) => {
   try {
     const election = await Election.create(req.body);
@@ -12,7 +12,7 @@ exports.createElection = async (req, res) => {
   }
 };
 
-// Get all Elections
+
 exports.getElections = async (req, res) => {
   try {
     const elections = await Election.find().populate("candidates");
@@ -22,7 +22,7 @@ exports.getElections = async (req, res) => {
   }
 };
 
-// Get Single Election
+
 exports.getElection = async (req, res) => {
   try {
     const election = await Election.findById(req.params.id).populate("candidates");
@@ -32,7 +32,7 @@ exports.getElection = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-// Update Election (Admin)
+
 exports.updateElection = async (req, res) => {
   try {
     const { title, description, startDate, endDate } = req.body;
@@ -52,7 +52,7 @@ exports.updateElection = async (req, res) => {
   }
 };
 
-// Delete Election (Admin)
+
 exports.deleteElection = async (req, res) => {
   try {
     const election = await Election.findByIdAndDelete(req.params.id);
@@ -61,7 +61,7 @@ exports.deleteElection = async (req, res) => {
       return res.status(404).json({ error: "Election not found" });
     }
     
-    // Also delete all associated candidates
+    
     await Candidate.deleteMany({ election: req.params.id });
     
     res.json({ message: "Election deleted successfully" });

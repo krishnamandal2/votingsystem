@@ -1,27 +1,27 @@
 const Candidate = require("../models/Candidate");
 const Election = require("../models/Election");
 
-// Add Candidate to Election
+
 exports.addCandidate = async (req, res) => {
   try {
     const { name, party } = req.body;
     const { electionId } = req.params;
     
-    // Check if election exists
+    
     const election = await Election.findById(electionId);
     if (!election) {
       return res.status(404).json({ error: "Election not found" });
     }
     
-    // Create candidate (age is optional now)
+   
     const candidate = await Candidate.create({
       name,
       party,
-      age: req.body.age || 18, // Default age if not provided
+      age: req.body.age || 18, 
       election: electionId
     });
     
-    // Add candidate to election's candidates array
+    
     election.candidates.push(candidate._id);
     await election.save();
     
@@ -31,7 +31,7 @@ exports.addCandidate = async (req, res) => {
   }
 };
 
-// Get all candidates for an election
+
 exports.getCandidates = async (req, res) => {
   try {
     const { electionId } = req.params;
@@ -42,7 +42,7 @@ exports.getCandidates = async (req, res) => {
   }
 };
 
-// Get single candidate
+
 exports.getCandidate = async (req, res) => {
   try {
     const { candidateId } = req.params;
@@ -56,7 +56,7 @@ exports.getCandidate = async (req, res) => {
   }
 };
 
-// Update Candidate
+
 exports.updateCandidate = async (req, res) => {
   try {
     const { candidateId } = req.params;
@@ -78,7 +78,7 @@ exports.updateCandidate = async (req, res) => {
   }
 };
 
-// Delete Candidate
+
 exports.deleteCandidate = async (req, res) => {
   try {
     const { electionId, candidateId } = req.params;
@@ -88,7 +88,7 @@ exports.deleteCandidate = async (req, res) => {
       return res.status(404).json({ error: "Candidate not found" });
     }
     
-    // Remove candidate from election's candidates array
+    
     await Election.findByIdAndUpdate(electionId, {
       $pull: { candidates: candidateId }
     });

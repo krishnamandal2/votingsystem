@@ -1,4 +1,4 @@
-// db.js - MongoDB connection using Mongoose
+
 require('dotenv').config(); // Load environment variables
 const mongoose = require('mongoose');
 
@@ -14,7 +14,7 @@ mongoose.connect(mongoURL, {
 
 const db = mongoose.connection;
 
-// Step 4: Define event listeners
+
 db.on('connected', () => console.log('🔗 MongoDB connected'));
 db.on('error', (err) => console.error('⚠️ MongoDB connection error:', err));
 db.on('disconnected', () => console.log('⚡ MongoDB disconnected'));

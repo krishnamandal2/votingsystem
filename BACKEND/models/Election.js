@@ -1,4 +1,4 @@
-// models/Election.js
+
 const mongoose = require("mongoose");
 
 const electionSchema = new mongoose.Schema({

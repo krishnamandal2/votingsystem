@@ -1,16 +1,15 @@
-// controllers/userController.js
+
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 
 
-// Register
 exports.register = async (req, res) => {
   try {
     const { name, email, password, role, adminCode } = req.body;
 
-    // Optional: only allow admin creation if code matches
+    
     if (role === "admin" && adminCode !== process.env.ADMIN_CODE) {
       return res.status(403).json({ error: "Invalid admin code" });
     }
@@ -27,7 +26,7 @@ exports.register = async (req, res) => {
   }
 };
 
-// Login
+
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
