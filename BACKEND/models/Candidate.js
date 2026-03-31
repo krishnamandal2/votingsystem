@@ -14,7 +14,7 @@ const candidateSchema = new mongoose.Schema({
   },
   age: {
     type: Number,
-    required: true
+    required: false
   },
   election: {
     type: mongoose.Schema.Types.ObjectId,

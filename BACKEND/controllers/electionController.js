@@ -32,3 +32,40 @@ exports.getElection = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+// Update Election (Admin)
+exports.updateElection = async (req, res) => {
+  try {
+    const { title, description, startDate, endDate } = req.body;
+    const election = await Election.findByIdAndUpdate(
+      req.params.id,
+      { title, description, startDate, endDate },
+      { new: true, runValidators: true }
+    );
+    
+    if (!election) {
+      return res.status(404).json({ error: "Election not found" });
+    }
+    
+    res.json({ message: "Election updated successfully", election });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Delete Election (Admin)
+exports.deleteElection = async (req, res) => {
+  try {
+    const election = await Election.findByIdAndDelete(req.params.id);
+    
+    if (!election) {
+      return res.status(404).json({ error: "Election not found" });
+    }
+    
+    // Also delete all associated candidates
+    await Candidate.deleteMany({ election: req.params.id });
+    
+    res.json({ message: "Election deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
