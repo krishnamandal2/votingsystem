@@ -7,6 +7,9 @@ import VoterDashboard from "./pages/dashboard/VoterDashboard";
 import ElectionList from "./pages/ElectionList";
 import ElectionDetails from "./pages/ElectionDetails";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import UserDashboard from "./pages/dashboard/UserDashboard";
+import Account from "./pages/Account";
+
 
 function App() {
   return (
@@ -15,6 +18,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        
+        {/* Admin Route */}
         <Route
           path="/admin"
           element={
@@ -23,6 +28,8 @@ function App() {
             </ProtectedRoute>
           }
         />
+        
+        {/* Voter Route - Main dashboard for voters */}
         <Route
           path="/voter"
           element={
@@ -31,8 +38,21 @@ function App() {
             </ProtectedRoute>
           }
         />
+        
+        {/* User Dashboard Route - Generic user account page */}
+        <Route
+          path="/account"
+          element={
+            <ProtectedRoute>
+              <UserDashboard />
+            </ProtectedRoute>
+          }
+        />
+        
+        {/* Public Election Routes */}
         <Route path="/elections" element={<ElectionList />} />
         <Route path="/election/:id" element={<ElectionDetails />} />
+        <Route path="/account" element={<Account />} />
       </Routes>
     </Router>
   );
